@@ -62,7 +62,14 @@ void JogarTruco(char cartasOrdenadas[39][50]) {
 
     while (Time_1.pontos_time < 12 && Time_2.pontos_time < 12)
     {
+        printf("\n________________________________________________\n");
+        printf("\n             Placar Parcial                     \n");
         jogarRodada(&Time_1, &Time_2, cartasOrdenadas);
+        printf("Time 1: %i \n", Time_1.pontos_time);
+        printf("Time 2: %i \n", Time_2.pontos_time);
+        printf("\n________________________________________________\n");
+
+
     }
     //jogarRodada(&Time_1, &Time_2, cartasOrdenadas);
 
@@ -71,7 +78,6 @@ void JogarTruco(char cartasOrdenadas[39][50]) {
 }
 
 void jogarRodada(Time *Time_1, Time *Time_2, char cartasOrdenadas[39][50]) {
-    int melhorDe3Count = 0;
     int TotalTime1 = 0;
     int TotalTime2 = 0;
     char CartasRodada[39][50];
@@ -133,9 +139,7 @@ void jogarRodada(Time *Time_1, Time *Time_2, char cartasOrdenadas[39][50]) {
     
     printf("\n________________________________________________\n");
 
-   // pegarCartaUsuario(Time_1,Time_2,CartasRodada);
-
-    while (melhorDe3Count != 2) {
+    while (TotalTime1 != 2 && TotalTime2 != 2) {
         int TimeVencedor;
         //Caso retorne 1 Time 1 caso retorne 2 Time 2 
         TimeVencedor = pegarCartaUsuario(Time_1,Time_2,CartasRodada);
@@ -145,7 +149,14 @@ void jogarRodada(Time *Time_1, Time *Time_2, char cartasOrdenadas[39][50]) {
         else{
             TotalTime2++;
         }
-        melhorDe3Count ++;
+        
+        printf("\nParcial\n");
+        printf("\n %s  - %i Rodadas\n",NomeTime1,TotalTime1);
+        printf("\n %s  - %i Rodadas \n",NomeTime2,TotalTime2);
+        
+        printf("\n________________________________________________\n");
+
+
     }
     
     if(TotalTime1 == 2){
@@ -178,7 +189,7 @@ int pegarCartaUsuario(Time *Time_1, Time *Time_2,char cartas[39][50])
         {
             int indexCarta;
             int qnt_Array_Cartas = sizeof(Time_1->Jogador_A.cartas) / sizeof(Time_1->Jogador_A.cartas[0]);
-            printf("%i %s selecione uma carta: \n",qnt_Array_Cartas, Time_1->Jogador_A.nome_jogador);
+            printf("%s selecione uma carta: \n", Time_1->Jogador_A.nome_jogador);
             for (int i = 0; i < qnt_Array_Cartas + 1; i++)
             {
                 
@@ -253,12 +264,10 @@ int pegarCartaUsuario(Time *Time_1, Time *Time_2,char cartas[39][50])
     indexCartaTime2JogadorA = encontrarIndexNaRodada(CartaTime2JogadorA,cartas);
     indexCartaTime2JogadorB = encontrarIndexNaRodada(CartaTime2JogadorB,cartas);
 
-    printf("\n %i INDEX MONTE TIME 1 JOGADOR A\n", indexCartaTime1JogadorA);
-    printf("\n %i INDEX MONTE TIME 1 JOGADOR B\n", indexCartaTime1JogadorB);
-    printf("\n %i INDEX MONTE TIME 2 JOGADOR A\n", indexCartaTime2JogadorA);
-    printf("\n %i INDEX MONTE TIME 2 JOGADOR B\n", indexCartaTime2JogadorB);
-    
-    printf("\n________________________________________________\n");
+   // printf("\n %i INDEX MONTE TIME 1 JOGADOR A\n", indexCartaTime1JogadorA);
+    //printf("\n %i INDEX MONTE TIME 1 JOGADOR B\n", indexCartaTime1JogadorB);
+   // printf("\n %i INDEX MONTE TIME 2 JOGADOR A\n", indexCartaTime2JogadorA);
+   // printf("\n %i INDEX MONTE TIME 2 JOGADOR B\n", indexCartaTime2JogadorB);
     
     if (indexCartaTime1JogadorA < indexCartaTime2JogadorA && indexCartaTime1JogadorA < indexCartaTime2JogadorB && indexCartaTime1JogadorA < indexCartaTime1JogadorB) {
         printf("\nTime 1 Ganhou Jogador A tem a carta mais forte\n");
@@ -276,6 +285,7 @@ int pegarCartaUsuario(Time *Time_1, Time *Time_2,char cartas[39][50])
         return 2;
 
     }
+    printf("\n________________________________________________\n");
 
 }
 
