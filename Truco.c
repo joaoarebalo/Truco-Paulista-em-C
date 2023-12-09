@@ -22,7 +22,7 @@ void DesserializarCartas(char cartas[39][50]);
 void JogarTruco(char cartasOrdenadas[39][50]);
 Time CriarTime();
 void embaralharCartas(char cartas[39][50]);
-void jogarRodada(Time *Time_1, Time *Time_2, char cartasOrdenadas[39][50]);
+int jogarRodada(Time *Time_1, Time *Time_2, char cartasOrdenadas[39][50]);
 void separarCartas(Time *Time_1, Time *Time_2, char cartas[39][50]);
 void separarManilha(char Cartas[39][50]);
 int pegarCartaUsuario(Time *Time_1, Time *Time_2,char cartas[39][50]);
@@ -44,10 +44,14 @@ void DesserializarCartas(char cartas[39][50]) {
 
     int init_size = strlen(str);
     char delim[] = "/";
+    
+    // Criar uma cópia da string original
+    char str_copy[init_size + 1];
+    strcpy(str_copy, str);
 
-    char *ptr = strtok(str, delim);
+    char *ptr = strtok(str_copy, delim);
 
-    while (ptr != NULL) {
+    while (ptr != NULL && i < 39) {
         strcpy(cartas[i], ptr);
         ptr = strtok(NULL, delim);
         i++;
@@ -88,7 +92,7 @@ void JogarTruco(char cartasOrdenadas[39][50]) {
     }
 }
 
-void jogarRodada(Time *Time_1, Time *Time_2, char cartasOrdenadas[39][50]) {
+int jogarRodada(Time *Time_1, Time *Time_2, char cartasOrdenadas[39][50]) {
     int TotalTime1 = 0;
     int TotalTime2 = 0;
     int TimeVencedor = 0;
@@ -146,7 +150,7 @@ void jogarRodada(Time *Time_1, Time *Time_2, char cartasOrdenadas[39][50]) {
    
     //printf("\n________________________________________________\n");
 
-    while (TotalTime1 != 2 && TotalTime2 != 2 && TimeVencedor != 11 && TimeVencedor != 22) {
+    while (TotalTime1 != 2 && TotalTime2 != 2) {
         //Caso retorne 1 Time 1 caso retorne 2 Time 2 
         TimeVencedor = pegarCartaUsuario(Time_1,Time_2,CartasRodada);
         if(TimeVencedor == 1){
@@ -167,20 +171,23 @@ void jogarRodada(Time *Time_1, Time *Time_2, char cartasOrdenadas[39][50]) {
 
     }
     
-    printf("\n________________________________________________\n");
     if(TimeVencedor == 11){
         Time_1->pontos_time = Time_1->pontos_time + 1;
         printf("\n %s Fugiu da rodada %s recebe somente 1 ponto \n",Time_2->nome_time,Time_1->nome_time);
+        return 0;
     }
     else if(TimeVencedor == 22){
         Time_2->pontos_time = Time_2->pontos_time + 1;
         printf("\n %s Fugiu da rodada %s recebe somente 1 ponto \n",Time_1->nome_time,Time_2->nome_time);
+        return 0;
     }
     else if(TotalTime1 == 2){
         Time_1->pontos_time = Time_1->pontos_time + 3;
+        return 0;
     }
     else{
         Time_2->pontos_time = Time_2->pontos_time + 3;
+        return 0;
     }
 }
 
