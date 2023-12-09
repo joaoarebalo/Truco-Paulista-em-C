@@ -99,17 +99,23 @@ int jogarRodada(Time *Time_1, Time *Time_2, char cartasOrdenadas[39][50]) {
     char CartasRodada[39][50];
 
     for (int i = 0; i < 39; i++) {
-        if(cartasOrdenadas[i] != ""){
+        
+        if(strcmp(cartasOrdenadas[i], "") != 0){
            strcpy(CartasRodada[i], cartasOrdenadas[i]);
         }
     }
 
     embaralharCartas(CartasRodada);
+    
+    for (int i = 0; i < 39; i++) {
+        
+        if(strcmp(CartasRodada[i], "") != 0){
+           strcpy(CartasRodada[i], CartasRodada[i]);
+        }
+    }
     separarCartas(Time_1, Time_2, CartasRodada);
     separarManilha(CartasRodada);
-    
-    
-    
+
     //for (int i = 0; i < 40; i++) {
      //     printf("\n %s \n",CartasRodada[i]);
     //    }
