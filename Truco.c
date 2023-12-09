@@ -72,6 +72,13 @@ void JogarTruco(char cartasOrdenadas[39][50]) {
 
 
     }
+    
+    if(Time_1.pontos_time == 12){
+      printf("\n %s Ganhou o Jogo!!!!\n", Time_1.nome_time);
+    }
+    else{
+      printf("\n %s Ganhou o Jogo!!!!\n", Time_2.nome_time);
+    }
 }
 
 void jogarRodada(Time *Time_1, Time *Time_2, char cartasOrdenadas[39][50]) {
