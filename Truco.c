@@ -62,19 +62,16 @@ void JogarTruco(char cartasOrdenadas[39][50]) {
 
     while (Time_1.pontos_time < 12 && Time_2.pontos_time < 12)
     {
+
+        jogarRodada(&Time_1, &Time_2, cartasOrdenadas);
         printf("\n________________________________________________\n");
         printf("\n             Placar Parcial                     \n");
-        jogarRodada(&Time_1, &Time_2, cartasOrdenadas);
-        printf("Time 1: %i \n", Time_1.pontos_time);
-        printf("Time 2: %i \n", Time_2.pontos_time);
+        printf("%s: %i \n",Time_1.nome_time ,Time_1.pontos_time);
+        printf("%s: %i \n",Time_2.nome_time ,Time_2.pontos_time);
         printf("\n________________________________________________\n");
 
 
     }
-    //jogarRodada(&Time_1, &Time_2, cartasOrdenadas);
-
- 
-    
 }
 
 void jogarRodada(Time *Time_1, Time *Time_2, char cartasOrdenadas[39][50]) {
@@ -97,47 +94,47 @@ void jogarRodada(Time *Time_1, Time *Time_2, char cartasOrdenadas[39][50]) {
     
     
     
-    for (int i = 0; i < 40; i++) {
-          printf("\n %s \n",CartasRodada[i]);
-        }
+    //for (int i = 0; i < 40; i++) {
+     //     printf("\n %s \n",CartasRodada[i]);
+    //    }
         
-    printf("\n_______________Resumo____________________\n");
+    //printf("\n_______________Resumo____________________\n");
 
-    printf("%s\n",NomeTime1);
-    printf("ordem: %i \n",Time_1->Jogador_A.ordem);
-    printf("%s\n",Time_1->Jogador_A.nome_jogador);
-    printf("%s/", Time_1->Jogador_A.cartas[0]);
-    printf("%s/", Time_1->Jogador_A.cartas[1]);
-    printf("%s", Time_1->Jogador_A.cartas[2]);
+   // printf("%s\n",NomeTime1);
+    //printf("ordem: %i \n",Time_1->Jogador_A.ordem);
+   // printf("%s\n",Time_1->Jogador_A.nome_jogador);
+    //printf("%s/", Time_1->Jogador_A.cartas[0]);
+   // printf("%s/", Time_1->Jogador_A.cartas[1]);
+   // printf("%s", Time_1->Jogador_A.cartas[2]);
 
-    printf("\n________________________________________________\n");
+    //printf("\n________________________________________________\n");
 
-    printf("%s\n",NomeTime1);
-    printf("ordem: %i \n",Time_1->Jogador_B.ordem);
-    printf("%s\n",Time_1->Jogador_B.nome_jogador);
-    printf("%s/", Time_1->Jogador_B.cartas[0]);
-    printf("%s/", Time_1->Jogador_B.cartas[1]);
-    printf("%s", Time_1->Jogador_B.cartas[2]);
+   // printf("%s\n",NomeTime1);
+   // printf("ordem: %i \n",Time_1->Jogador_B.ordem);
+   // printf("%s\n",Time_1->Jogador_B.nome_jogador);
+   // printf("%s/", Time_1->Jogador_B.cartas[0]);
+   // printf("%s/", Time_1->Jogador_B.cartas[1]);
+    //printf("%s", Time_1->Jogador_B.cartas[2]);
+   
+  // printf("\n________________________________________________\n");
     
-   printf("\n________________________________________________\n");
-    
-    printf("%s\n",NomeTime2);
-    printf("ordem: %i \n",Time_2->Jogador_A.ordem);
-    printf("%s\n",Time_2->Jogador_A.nome_jogador);
-    printf("%s/", Time_2->Jogador_A.cartas[0]);
-    printf("%s/", Time_2->Jogador_A.cartas[1]);
-    printf("%s", Time_2->Jogador_A.cartas[2]);
+   // printf("%s\n",NomeTime2);
+   // printf("ordem: %i \n",Time_2->Jogador_A.ordem);
+   // printf("%s\n",Time_2->Jogador_A.nome_jogador);
+   // printf("%s/", Time_2->Jogador_A.cartas[0]);
+   // printf("%s/", Time_2->Jogador_A.cartas[1]);
+   // printf("%s", Time_2->Jogador_A.cartas[2]);
 
-    printf("\n________________________________________________\n");
+   // printf("\n________________________________________________\n");
     
-    printf("%s\n",NomeTime2);    
-    printf("ordem: %i \n",Time_2->Jogador_B.ordem);
-    printf("%s\n",Time_2->Jogador_B.nome_jogador);
-    printf("%s/", Time_2->Jogador_B.cartas[0]);
-    printf("%s/", Time_2->Jogador_B.cartas[1]);
-    printf("%s", Time_2->Jogador_B.cartas[2]);
-    
-    printf("\n________________________________________________\n");
+  //  printf("%s\n",NomeTime2);    
+   // printf("ordem: %i \n",Time_2->Jogador_B.ordem);
+  //  printf("%s\n",Time_2->Jogador_B.nome_jogador);
+  //  printf("%s/", Time_2->Jogador_B.cartas[0]);
+  //  printf("%s/", Time_2->Jogador_B.cartas[1]);
+  //  printf("%s", Time_2->Jogador_B.cartas[2]);
+   
+    //printf("\n________________________________________________\n");
 
     while (TotalTime1 != 2 && TotalTime2 != 2) {
         int TimeVencedor;
@@ -166,9 +163,6 @@ void jogarRodada(Time *Time_1, Time *Time_2, char cartasOrdenadas[39][50]) {
         Time_2->pontos_time = Time_2->pontos_time + 3;
     }
 
-
-   // Time_1.pontos_time = 24;
-    //Time_2.pontos_time = 24;
 }
 
 int pegarCartaUsuario(Time *Time_1, Time *Time_2,char cartas[39][50])
@@ -299,13 +293,7 @@ int encontrarIndexNaRodada(char carta[50], char CartasRodada[39][50]) {
 }
 
 void removerElemento(char array[][50], int *tamanho, int indice) {
-    if (indice < 0 || indice >= *tamanho) {
-        return;
-    }
-    
     strcpy(array[indice], "NULL");
-
-    (*tamanho)--;
 }
 
 void separarManilha(char CartasEmbaralhadas[39][50])
