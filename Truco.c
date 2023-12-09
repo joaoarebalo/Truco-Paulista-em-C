@@ -99,7 +99,9 @@ int jogarRodada(Time *Time_1, Time *Time_2, char cartasOrdenadas[39][50]) {
     char CartasRodada[39][50];
 
     for (int i = 0; i < 39; i++) {
-        strcpy(CartasRodada[i], cartasOrdenadas[i]);
+        if(cartasOrdenadas[i] != ""){
+           strcpy(CartasRodada[i], cartasOrdenadas[i]);
+        }
     }
 
     embaralharCartas(CartasRodada);
@@ -478,7 +480,7 @@ void embaralharCartas(char cartas[39][50]) {
         int j = rand() % (i + 1);
 
         // Troca as cartas nas posições i e j
-        char temp[39];
+        char temp[50];
         strcpy(temp, cartas[i]);
         strcpy(cartas[i], cartas[j]);
         strcpy(cartas[j], temp);
