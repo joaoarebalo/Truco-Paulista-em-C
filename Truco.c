@@ -190,11 +190,11 @@ int jogarRodada(Time *Time_1, Time *Time_2, char cartasOrdenadas[39][50]) {
         return 0;
     }
     else if(TotalTime1 == 2){
-        Time_1->pontos_time = Time_1->pontos_time + 3;
+        Time_1->pontos_time = Time_1->pontos_time + 1;
         return 0;
     }
     else{
-        Time_2->pontos_time = Time_2->pontos_time + 3;
+        Time_2->pontos_time = Time_2->pontos_time + 1;
         return 0;
     }
 }
