@@ -243,6 +243,7 @@ int pegarCartaUsuario(Time *Time_1, Time *Time_2,char cartas[39][50])
             scanf("%i", &indexCarta);
             
             if(indexCarta == 4){
+                reorganizarOrdemJogada(Time_1,Time_2,Time_1->Jogador_A.ordem + 1);
                 return 22;
             }
             
@@ -268,6 +269,7 @@ int pegarCartaUsuario(Time *Time_1, Time *Time_2,char cartas[39][50])
             scanf("%i", &indexCarta);
             
             if(indexCarta == 4){
+                reorganizarOrdemJogada(Time_1,Time_2,Time_1->Jogador_B.ordem + 1);
                 return 22;
             }
             strcpy(CartaTime1JogadorB, Time_1->Jogador_B.cartas[indexCarta]);
@@ -291,6 +293,7 @@ int pegarCartaUsuario(Time *Time_1, Time *Time_2,char cartas[39][50])
             scanf("%i", &indexCarta);
             
             if(indexCarta == 4){
+                reorganizarOrdemJogada(Time_1,Time_2,Time_2->Jogador_A.ordem + 1);
                 return 11;
             }
             strcpy(CartaTime2JogadorA, Time_2->Jogador_A.cartas[indexCarta]);
@@ -314,6 +317,7 @@ int pegarCartaUsuario(Time *Time_1, Time *Time_2,char cartas[39][50])
             scanf("%i", &indexCarta);
             
             if(indexCarta == 4){
+                reorganizarOrdemJogada(Time_1,Time_2,Time_2->Jogador_B.ordem + 1);
                 return 11;
             }
             strcpy(CartaTime2JogadorB, Time_2->Jogador_B.cartas[indexCarta]);
