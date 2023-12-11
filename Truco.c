@@ -423,7 +423,7 @@ void separarManilha(char CartasEmbaralhadas[39][50])
 {
     char InicialAnteriorManilha;
     char InicialManilha;
-    char OrdemManilha[10] = '32AKJQ7654';
+    char OrdemManilha[10] = "32AKJQ7654";
     char OrdemNipe[4][25] = {"Paus","Copas","Espada","Ouro"};
     char Retorno[40][50];
     
