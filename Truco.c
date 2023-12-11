@@ -70,6 +70,7 @@ void JogarTruco(char cartasOrdenadas[39][50]) {
     Time_1.Jogador_B.ordem = 3;
     Time_2.Jogador_B.ordem = 4;
     
+    //Enquanto nenhum dos 2 times não fizer 12 pontos
     while (Time_1.pontos_time < 12 && Time_2.pontos_time < 12)
     {
 
@@ -158,6 +159,8 @@ int jogarRodada(Time *Time_1, Time *Time_2, char cartasOrdenadas[39][50]) {
    
     //printf("\n________________________________________________\n");
 
+
+    //Enquanto nenhum dos 2 times não fizer 2 rodadas no melhor de 3
     while (TotalTime1 != 2 && TotalTime2 != 2) {
         //Caso retorne 1 Time 1 caso retorne 2 Time 2 
         TimeVencedor = pegarCartaUsuario(Time_1,Time_2,CartasRodada);
