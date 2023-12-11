@@ -432,7 +432,7 @@ void separarManilha(char CartasEmbaralhadas[39][50])
     //Pego a manilha do jogo na proxima posicao do Vira
     for (int i = 0; i < 9; i++) {
         if (OrdemManilha[i] == InicialAnteriorManilha && InicialAnteriorManilha != '4') {
-            i = i - 1;
+            i = i + 1;
             InicialManilha = OrdemManilha[i];
             break;  
         }
