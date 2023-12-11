@@ -160,6 +160,7 @@ int jogarRodada(Time *Time_1, Time *Time_2, char cartasOrdenadas[39][50]) {
     //printf("\n________________________________________________\n");
 
 
+
     //Enquanto nenhum dos 2 times não fizer 2 rodadas no melhor de 3
     while (TotalTime1 != 2 && TotalTime2 != 2) {
         //Caso retorne 1 Time 1 caso retorne 2 Time 2 
@@ -421,8 +422,8 @@ void removerElemento(char array[][50], int *tamanho, int indice) {
 void separarManilha(char CartasEmbaralhadas[39][50])
 {
     char InicialAnteriorManilha;
-    char InicialManilha = '4';
-    char OrdemManilha[10] = {'3','2','A','K','J','Q','7','6','5','4'};
+    char InicialManilha;
+    char OrdemManilha[10] = '32AKJQ7654';
     char OrdemNipe[4][25] = {"Paus","Copas","Espada","Ouro"};
     char Retorno[40][50];
     
@@ -430,11 +431,15 @@ void separarManilha(char CartasEmbaralhadas[39][50])
     //Inicial da 13 Carta do baralho
     InicialAnteriorManilha = CartasEmbaralhadas[12][0];
     
-    
+    printf("\n________________________________________________\n");
+
+    printf("\nA Carta virada foi: %c \n",CartasEmbaralhadas[12][0]);
+
+    printf("\n________________________________________________\n");
     
     //Pego a manilha do jogo na proxima posicao do Vira
     for (int i = 0; i < 9; i++) {
-        if (OrdemManilha[i] == InicialAnteriorManilha && InicialAnteriorManilha != '4') {
+        if (OrdemManilha[i] == InicialAnteriorManilha) {
             i = i - 1;
             InicialManilha = OrdemManilha[i];
             break;  
