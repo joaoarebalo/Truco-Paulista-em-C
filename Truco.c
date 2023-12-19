@@ -29,6 +29,9 @@ int pegarCartaUsuario(Time *Time_1, Time *Time_2,char cartas[39][50]);
 void removerElemento(char array[][50], int *tamanho, int indice);
 int encontrarIndexNaRodada(char carta[50], char CartasRodada[39][50]);
 int reorganizarOrdemJogada(Time *Time_1, Time *Time_2,int ordemGanhadorRodada);
+int pegarCartaUsuarioTrucado(Time *Time_1, Time *Time_2,char cartas[39][50],int *PontosTruco, int TimeQTrucou);
+void Truco(Time *Time_1, Time *Time_2, char manilhas[39][50], int TimeQtrucou, int QntRodadasTime1,int QntRodadasTime);
+
 
 int main() {
     char cartasOrdenadas[39][50];
@@ -40,10 +43,10 @@ int main() {
 
 void DesserializarCartas(char cartas[39][50]) {
     int i = 0;
-    char str[] = "4 Ouro/4 Espada/4 Copas/4 Paus/5 Ouro/5 Espada/5 Copas/5 Paus/6 Ouro/6 Espada/6 Copas/6 Paus/7 Ouro/7 Espada/7 Copas/7 Paus/Q Ouro/Q Espada/Q Copas/Q Paus/J Ouro/J Espada/J Copas/J Paus/K Ouro/K Espada/K Copas/K Paus/A Ouro/A Espada/A Copas/A Paus/2 Ouro/2 Espada/2 Copas/2 Paus/3 Ouro/3 Espada/3 Copas/3 Paus";
+    char str[] = "4 Ouro;4 Espada;4 Copas;4 Paus;5 Ouro;5 Espada;5 Copas;5 Paus;6 Ouro;6 Espada;6 Copas;6 Paus;7 Ouro;7 Espada;7 Copas;7 Paus;Q Ouro;Q Espada;Q Copas;Q Paus;J Ouro;J Espada;J Copas;J Paus;K Ouro;K Espada;K Copas;K Paus;A Ouro;A Espada;A Copas;A Paus;2 Ouro;2 Espada;2 Copas;2 Paus;3 Ouro;3 Espada;3 Copas;3 Paus";
 
     int init_size = strlen(str);
-    char delim[] = "/";
+    char delim[] = ";";
     
     // Criar uma cópia da string original
     char str_copy[init_size + 1];
@@ -117,50 +120,6 @@ int jogarRodada(Time *Time_1, Time *Time_2, char cartasOrdenadas[39][50]) {
     separarCartas(Time_1, Time_2, CartasRodada);
     separarManilha(CartasRodada);
 
-    //for (int i = 0; i < 40; i++) {
-     //     printf("\n %s \n",CartasRodada[i]);
-    //    }
-        
-    //printf("\n_______________Resumo____________________\n");
-
-   // printf("%s\n",NomeTime1);
-    //printf("ordem: %i \n",Time_1->Jogador_A.ordem);
-   // printf("%s\n",Time_1->Jogador_A.nome_jogador);
-    //printf("%s/", Time_1->Jogador_A.cartas[0]);
-   // printf("%s/", Time_1->Jogador_A.cartas[1]);
-   // printf("%s", Time_1->Jogador_A.cartas[2]);
-
-    //printf("\n________________________________________________\n");
-
-   // printf("%s\n",NomeTime1);
-   // printf("ordem: %i \n",Time_1->Jogador_B.ordem);
-   // printf("%s\n",Time_1->Jogador_B.nome_jogador);
-   // printf("%s/", Time_1->Jogador_B.cartas[0]);
-   // printf("%s/", Time_1->Jogador_B.cartas[1]);
-    //printf("%s", Time_1->Jogador_B.cartas[2]);
-   
-  // printf("\n________________________________________________\n");
-    
-   // printf("%s\n",NomeTime2);
-   // printf("ordem: %i \n",Time_2->Jogador_A.ordem);
-   // printf("%s\n",Time_2->Jogador_A.nome_jogador);
-   // printf("%s/", Time_2->Jogador_A.cartas[0]);
-   // printf("%s/", Time_2->Jogador_A.cartas[1]);
-   // printf("%s", Time_2->Jogador_A.cartas[2]);
-
-   // printf("\n________________________________________________\n");
-    
-  //  printf("%s\n",NomeTime2);    
-   // printf("ordem: %i \n",Time_2->Jogador_B.ordem);
-  //  printf("%s\n",Time_2->Jogador_B.nome_jogador);
-  //  printf("%s/", Time_2->Jogador_B.cartas[0]);
-  //  printf("%s/", Time_2->Jogador_B.cartas[1]);
-  //  printf("%s", Time_2->Jogador_B.cartas[2]);
-   
-    //printf("\n________________________________________________\n");
-
-
-
     //Enquanto nenhum dos 2 times não fizer 2 rodadas no melhor de 3
     while (TotalTime1 != 2 && TotalTime2 != 2) {
         //Caso retorne 1 Time 1 caso retorne 2 Time 2 
@@ -168,7 +127,8 @@ int jogarRodada(Time *Time_1, Time *Time_2, char cartasOrdenadas[39][50]) {
         if(TimeVencedor == 1){
             TotalTime1 ++;
         }
-        else if(TimeVencedor == 11 || TimeVencedor == 22){
+        //Truco ou Fugiu
+        else if(TimeVencedor == 11 || TimeVencedor == 22 || TimeVencedor == 15 || TimeVencedor == 25){
             break;
         }
         else{
@@ -193,6 +153,14 @@ int jogarRodada(Time *Time_1, Time *Time_2, char cartasOrdenadas[39][50]) {
         printf("\n %s Fugiu da rodada %s recebe somente 1 ponto \n",Time_1->nome_time,Time_2->nome_time);
         return 0;
     }
+    else if(TimeVencedor == 15){
+        Truco(Time_1,Time_2,CartasRodada,1,TotalTime1,TotalTime2);
+        return 0;
+    }
+    else if(TimeVencedor == 25){
+        Truco(Time_1,Time_2,CartasRodada,2,TotalTime1,TotalTime2);
+        return 0;
+    }
     else if(TotalTime1 == 2){
         Time_1->pontos_time = Time_1->pontos_time + 1;
         return 0;
@@ -201,6 +169,122 @@ int jogarRodada(Time *Time_1, Time *Time_2, char cartasOrdenadas[39][50]) {
         Time_2->pontos_time = Time_2->pontos_time + 1;
         return 0;
     }
+}
+
+void Truco(Time *Time_1, Time *Time_2, char manilhas[39][50], int TimeQtrucou, int QntRodadasTime1,int QntRodadasTime2){
+    if(TimeQtrucou == 1){
+        int AceitouTruco; 
+        int ganhador;
+        int QntPontos = 3;
+        
+        printf("\n________________________________________________\n");
+        printf(" %s Aceita o truco? \n1-Sim / 2-Nao ",Time_2->nome_time);
+        scanf("%i",&AceitouTruco);
+        printf("\n________________________________________________\n");
+
+        if(AceitouTruco == 1){
+                while(QntRodadasTime1 != 2  &&  QntRodadasTime2 != 2){
+                    ganhador = pegarCartaUsuarioTrucado(Time_1,Time_2,manilhas,&QntPontos,1);
+                    
+                    if(ganhador == 11){
+                        Time_1->pontos_time = Time_1->pontos_time + QntPontos;
+                        printf("\n %s Fugiu da rodada %s recebe somente %i ponto \n",Time_2->nome_time,Time_1->nome_time,QntPontos);
+                        break;
+                    }
+                    else if(ganhador == 22){
+                        Time_2->pontos_time = Time_2->pontos_time + QntPontos;
+                        printf("\n %s Fugiu da rodada %s recebe somente %i ponto \n",Time_1->nome_time,Time_2->nome_time,QntPontos);
+                        break;
+                    }
+                    else if(ganhador == 2){
+                      QntRodadasTime2 = QntRodadasTime2 + 1;
+                    }
+                    else{
+                      QntRodadasTime1 = QntRodadasTime1 + 1;
+                    }
+                    
+                        printf("\n______________Parcial Rodada____________________\n");
+                        printf("\n %s  - %i Rodadas\n",Time_1->nome_time,QntRodadasTime1);
+                        printf("\n %s  - %i Rodadas \n",Time_2->nome_time,QntRodadasTime2);
+                        printf("\n________________________________________________\n");
+                        
+                }
+                
+                if(QntRodadasTime1 == 2 && (ganhador != 11 || ganhador != 22) ){
+                    printf("\n________________________________________________\n");
+                    printf("\%s Ganhou o truco ladrão, ele ganhou mais %i pontos, seu otário \n", Time_1->nome_time, QntPontos);
+                    printf("\n________________________________________________\n");
+                    Time_1->pontos_time = Time_1->pontos_time + QntPontos;
+                }
+                if(QntRodadasTime2 == 2 && (ganhador != 11 || ganhador != 22) ){
+                    printf("\n________________________________________________\n");
+                    printf("\%s Ganhou o truco ladrão, ele ganhou mais %i pontos, seu otário \n", Time_2->nome_time, QntPontos);
+                    printf("\n________________________________________________\n");
+                    Time_2->pontos_time = Time_2->pontos_time + QntPontos;
+                }
+                
+                
+        }
+        else{
+            Time_1->pontos_time = Time_1->pontos_time + 1;
+        }
+    }
+    else{
+        int AceitouTruco; 
+        int ganhador;
+        int QntPontos = 3;
+        
+        printf("\n________________________________________________\n");
+        printf(" %s Aceita o truco? \n1-Sim / 2-Nao ",Time_1->nome_time);
+        scanf("%i",&AceitouTruco);
+        printf("\n________________________________________________\n");
+
+        if(AceitouTruco == 1){
+                while(QntRodadasTime1 != 2  &&  QntRodadasTime2 != 2){
+                    ganhador = pegarCartaUsuarioTrucado(Time_1,Time_2,manilhas,&QntPontos,2);
+                    
+                    if(ganhador == 11){
+                    Time_1->pontos_time = Time_1->pontos_time + QntPontos;
+                        printf("\n %s Fugiu da rodada %s recebe somente %i ponto \n",Time_2->nome_time,Time_1->nome_time,QntPontos);
+                    }
+                    else if(ganhador == 22){
+                        Time_2->pontos_time = Time_2->pontos_time + QntPontos;
+                        printf("\n %s Fugiu da rodada %s recebe somente %i ponto \n",Time_1->nome_time,Time_2->nome_time,QntPontos);
+                    }
+                    else if(ganhador == 2){
+                      QntRodadasTime2 = QntRodadasTime2 + 1;
+                    }
+                    else{
+                      QntRodadasTime1 = QntRodadasTime1 + 1;
+                    }
+                    
+                        printf("\n______________Parcial Rodada____________________\n");
+                        printf("\n %s  - %i Rodadas\n",Time_1->nome_time,QntRodadasTime1);
+                        printf("\n %s  - %i Rodadas \n",Time_2->nome_time,QntRodadasTime2);
+                        printf("\n________________________________________________\n");
+                        
+                }
+                
+                if(QntRodadasTime1 == 2){
+                    printf("\n________________________________________________\n");
+                    printf("\%s Ganhou o truco ladrão, ele ganhou mais %i pontos, seu otário \n", Time_1->nome_time, QntPontos);
+                    printf("\n________________________________________________\n");
+                    Time_1->pontos_time = Time_1->pontos_time + QntPontos;
+                }
+                else{
+                    printf("\n________________________________________________\n");
+                    printf("\%s Ganhou o truco ladrão, ele ganhou mais %i pontos, seu otário \n", Time_2->nome_time, QntPontos);
+                    printf("\n________________________________________________\n");
+                    Time_2->pontos_time = Time_2->pontos_time + QntPontos;
+                }
+                
+                
+        }
+        else{
+            Time_2->pontos_time = Time_2->pontos_time + 1;
+        }
+    }
+    
 }
 
 int pegarCartaUsuario(Time *Time_1, Time *Time_2,char cartas[39][50])
@@ -244,11 +328,16 @@ int pegarCartaUsuario(Time *Time_1, Time *Time_2,char cartas[39][50])
                 }
             }
             printf("\n 4 - Fugir \n");
+            printf("\n 5 - Truco Ladrao \n");
             scanf("%i", &indexCarta);
             
             if(indexCarta == 4){
                 reorganizarOrdemJogada(Time_1,Time_2,Time_1->Jogador_A.ordem + 1);
                 return 22;
+            }
+            if(indexCarta == 5){
+                reorganizarOrdemJogada(Time_1,Time_2,i - 1);
+                return 15;
             }
             
             strcpy(CartaTime1JogadorA, Time_1->Jogador_A.cartas[indexCarta]);
@@ -270,11 +359,16 @@ int pegarCartaUsuario(Time *Time_1, Time *Time_2,char cartas[39][50])
             }
             
             printf("\n 4 - Fugir \n");
+            printf("\n 5 - Truco Ladrao \n");
             scanf("%i", &indexCarta);
             
             if(indexCarta == 4){
                 reorganizarOrdemJogada(Time_1,Time_2,Time_1->Jogador_B.ordem + 1);
                 return 22;
+            }
+            if(indexCarta == 5){
+                reorganizarOrdemJogada(Time_1,Time_2,i - 1);
+                return 15;
             }
             strcpy(CartaTime1JogadorB, Time_1->Jogador_B.cartas[indexCarta]);
             removerElemento(Time_1->Jogador_B.cartas, &qnt_Array_Cartas, indexCarta);
@@ -294,11 +388,16 @@ int pegarCartaUsuario(Time *Time_1, Time *Time_2,char cartas[39][50])
                 }
             }
             printf("\n 4 - Fugir \n");
+            printf("\n 5 - Truco Ladrao \n");
             scanf("%i", &indexCarta);
             
             if(indexCarta == 4){
                 reorganizarOrdemJogada(Time_1,Time_2,Time_2->Jogador_A.ordem + 1);
                 return 11;
+            }
+            if(indexCarta == 5){
+                reorganizarOrdemJogada(Time_1,Time_2,i - 1);
+                return 25;
             }
             strcpy(CartaTime2JogadorA, Time_2->Jogador_A.cartas[indexCarta]);
             removerElemento(Time_2->Jogador_A.cartas, &qnt_Array_Cartas, indexCarta);
@@ -318,11 +417,16 @@ int pegarCartaUsuario(Time *Time_1, Time *Time_2,char cartas[39][50])
                 }
             }
             printf("\n 4 - Fugir \n");
+            printf("\n 5 - Truco Ladrao \n");
             scanf("%i", &indexCarta);
             
             if(indexCarta == 4){
                 reorganizarOrdemJogada(Time_1,Time_2,Time_2->Jogador_B.ordem + 1);
                 return 11;
+            }
+            if(indexCarta == 5){
+                reorganizarOrdemJogada(Time_1,Time_2,i - 1);
+                return 25;
             }
             strcpy(CartaTime2JogadorB, Time_2->Jogador_B.cartas[indexCarta]);
             removerElemento(Time_2->Jogador_B.cartas, &qnt_Array_Cartas, indexCarta);
@@ -423,7 +527,7 @@ void separarManilha(char CartasEmbaralhadas[39][50])
 {
     char InicialAnteriorManilha;
     char InicialManilha;
-    char OrdemManilha[10] = '32AKJQ7654';
+    char OrdemManilha[10] = "32AKJQ7654";
     char OrdemNipe[4][25] = {"Paus","Copas","Espada","Ouro"};
     char Retorno[40][50];
     
@@ -696,4 +800,235 @@ void separarCartas(Time *Time_1, Time *Time_2, char cartas[39][50]) {
             index++;
        }
     }
+}
+
+int pegarCartaUsuarioTrucado(Time *Time_1, Time *Time_2,char cartas[39][50],int *PontosTruco, int TimeQTrucou)
+{
+    char NomeTime1[50];
+    char NomeTime2[50];
+    char NomeTime1JogadorA[50];
+    char NomeTime1JogadorB[50];
+    char NomeTime2JogadorA[50];
+    char NomeTime2JogadorB[50];
+    strcpy(NomeTime1,Time_1->nome_time);
+    strcpy(NomeTime2,Time_2->nome_time);
+    strcpy(NomeTime1JogadorA,Time_1->Jogador_A.nome_jogador);
+    strcpy(NomeTime1JogadorB,Time_1->Jogador_B.nome_jogador);
+    strcpy(NomeTime2JogadorA,Time_2->Jogador_A.nome_jogador);
+    strcpy(NomeTime2JogadorB,Time_2->Jogador_B.nome_jogador);
+    
+    char CartaTime1JogadorA[50];
+    char CartaTime1JogadorB[50];
+    char CartaTime2JogadorA[50];
+    char CartaTime2JogadorB[50];
+    
+    int indexCartaTime1JogadorA;
+    int indexCartaTime1JogadorB;
+    int indexCartaTime2JogadorA;
+    int indexCartaTime2JogadorB;
+    
+    for (int i = 1; i < 5; i++)
+    {
+        if (Time_1->Jogador_A.ordem == i)
+        {
+            int indexCarta,AceitouTruco;
+            int qnt_Array_Cartas = sizeof(Time_1->Jogador_A.cartas) / sizeof(Time_1->Jogador_A.cartas[0]);
+            printf("%s selecione uma carta: \n", Time_1->Jogador_A.nome_jogador);
+            for (int i = 0; i < qnt_Array_Cartas; i++)
+            {
+                
+                if(strcmp(Time_1->Jogador_A.cartas[i] , "NULL") != 0) 
+                {
+                  printf("\n %i - %s \n", i, Time_1->Jogador_A.cartas[i]);
+                }
+            }
+            
+            if(TimeQTrucou != 1){
+              printf("\n 5 - Aumentar o truco para %i \n",*PontosTruco + 3);
+            }
+            printf("\n 4 - Fugir \n");
+            
+            scanf("%i", &indexCarta);
+
+            if(indexCarta == 4){
+                reorganizarOrdemJogada(Time_1,Time_2,Time_1->Jogador_A.ordem + 1);
+                return 22;
+            }
+            if(indexCarta == 5){
+                
+                printf("\n________________________________________________\n");
+                printf(" %s Aceita o truco? \n1-Sim / 2-Nao ",Time_2->nome_time);
+                scanf("%i",&AceitouTruco);
+                printf("\n________________________________________________\n");
+                
+                if(AceitouTruco == 1){
+                    PontosTruco = PontosTruco + 3;
+                }
+                else{
+                    return 11;
+                }
+                
+            }
+            
+            strcpy(CartaTime1JogadorA, Time_1->Jogador_A.cartas[indexCarta]);
+            removerElemento(Time_1->Jogador_A.cartas, &qnt_Array_Cartas, indexCarta);
+            printf("\n________________________________________________\n");
+
+        }
+        if (Time_1->Jogador_B.ordem == i)
+        {
+            int indexCarta,AceitouTruco;
+            int qnt_Array_Cartas = sizeof(Time_1->Jogador_B.cartas) / sizeof(Time_1->Jogador_B.cartas[0]);
+            printf("%s selecione uma carta: \n", Time_1->Jogador_B.nome_jogador);
+            for (int i = 0; i < qnt_Array_Cartas; i++)
+            {
+                if(strcmp(Time_1->Jogador_B.cartas[i] ,"NULL") != 0) 
+                {
+                 printf("\n %i - %s \n", i, Time_1->Jogador_B.cartas[i]);
+                }
+            }
+            
+            if(TimeQTrucou != 1){
+              printf("\n 5 - Aumentar o truco para %i \n",*PontosTruco + 3);
+            }
+            printf("\n 4 - Fugir \n");
+            
+            scanf("%i", &indexCarta);
+            
+            if(indexCarta == 4){
+                reorganizarOrdemJogada(Time_1,Time_2,Time_1->Jogador_B.ordem + 1);
+                return 22;
+            }
+            if(indexCarta == 5){
+                printf("\n________________________________________________\n");
+                printf(" %s Aceita o truco? \n1-Sim / 2-Nao ",Time_2->nome_time);
+                scanf("%i",&AceitouTruco);
+                printf("\n________________________________________________\n");
+                
+                if(AceitouTruco == 1){
+                    PontosTruco = PontosTruco + 3;
+                }
+                else{
+                    return 11;
+                }
+            }
+            strcpy(CartaTime1JogadorB, Time_1->Jogador_B.cartas[indexCarta]);
+            removerElemento(Time_1->Jogador_B.cartas, &qnt_Array_Cartas, indexCarta);
+            printf("\n________________________________________________\n");
+
+        }
+        if (Time_2->Jogador_A.ordem == i)
+        {
+            int indexCarta,AceitouTruco;
+            int qnt_Array_Cartas = sizeof(Time_2->Jogador_A.cartas) / sizeof(Time_2->Jogador_A.cartas[0]);
+            printf("%s selecione uma carta: \n", Time_2->Jogador_A.nome_jogador);
+            for (int i = 0; i < qnt_Array_Cartas; i++)
+            {
+                if(strcmp(Time_2->Jogador_A.cartas[i] , "NULL") != 0) 
+                {
+                 printf("\n %i - %s \n", i, Time_2->Jogador_A.cartas[i]);
+                }
+            }
+            
+            if(TimeQTrucou != 2){
+              printf("\n 5 - Aumentar o truco para %i \n",*PontosTruco + 3);
+            }
+            printf("\n 4 - Fugir \n");
+            
+            scanf("%i", &indexCarta);
+            
+            if(indexCarta == 4){
+                reorganizarOrdemJogada(Time_1,Time_2,Time_2->Jogador_A.ordem + 1);
+                return 11;
+            }
+            if(indexCarta == 5){
+                printf("\n________________________________________________\n");
+                printf(" %s Aceita o truco? \n1-Sim / 2-Nao ",Time_1->nome_time);
+                scanf("%i",&AceitouTruco);
+                printf("\n________________________________________________\n");
+                
+                if(AceitouTruco == 1){
+                    PontosTruco = PontosTruco + 3;
+                }
+                else{
+                    return 22;
+                }
+            }
+            strcpy(CartaTime2JogadorA, Time_2->Jogador_A.cartas[indexCarta]);
+            removerElemento(Time_2->Jogador_A.cartas, &qnt_Array_Cartas, indexCarta);
+            printf("\n________________________________________________\n");
+
+        }
+        if (Time_2->Jogador_B.ordem == i)
+        {
+            int indexCarta,AceitouTruco;
+            int qnt_Array_Cartas = sizeof(Time_2->Jogador_B.cartas) / sizeof(Time_2->Jogador_B.cartas[0]);
+            printf("%s selecione uma carta: \n", Time_2->Jogador_B.nome_jogador);
+            for (int i = 0; i < qnt_Array_Cartas; i++)
+            {
+                if(strcmp(Time_2->Jogador_B.cartas[i] ,"NULL") != 0)
+                {
+                 printf("\n %i - %s \n", i, Time_2->Jogador_B.cartas[i]);
+                }
+            }
+            
+            if(TimeQTrucou != 2){
+              printf("\n 5 - Aumentar o truco para %i \n",*PontosTruco + 3);
+            }
+            printf("\n 4 - Fugir \n");
+
+            
+            
+            scanf("%i", &indexCarta);
+            
+            if(indexCarta == 4){
+                reorganizarOrdemJogada(Time_1,Time_2,Time_2->Jogador_B.ordem + 1);
+                return 11;
+            }
+            if(indexCarta == 5){
+                printf("\n________________________________________________\n");
+                printf(" %s Aceita o truco? \n1-Sim / 2-Nao ",Time_1->nome_time);
+                scanf("%i",&AceitouTruco);
+                printf("\n________________________________________________\n");
+                
+                if(AceitouTruco == 1){
+                    PontosTruco = PontosTruco + 3;
+                }
+                else{
+                    return 22;
+                }
+            }
+            strcpy(CartaTime2JogadorB, Time_2->Jogador_B.cartas[indexCarta]);
+            removerElemento(Time_2->Jogador_B.cartas, &qnt_Array_Cartas, indexCarta);
+            printf("\n________________________________________________\n");
+
+        }
+    }
+    indexCartaTime1JogadorA = encontrarIndexNaRodada(CartaTime1JogadorA,cartas);
+    indexCartaTime1JogadorB = encontrarIndexNaRodada(CartaTime1JogadorB,cartas);
+    indexCartaTime2JogadorA = encontrarIndexNaRodada(CartaTime2JogadorA,cartas);
+    indexCartaTime2JogadorB = encontrarIndexNaRodada(CartaTime2JogadorB,cartas);
+
+    if (indexCartaTime1JogadorA < indexCartaTime2JogadorA && indexCartaTime1JogadorA < indexCartaTime2JogadorB && indexCartaTime1JogadorA < indexCartaTime1JogadorB) {
+        reorganizarOrdemJogada(Time_1,Time_2,Time_1->Jogador_A.ordem);
+        printf("\n %s venceu essa, %s tem a carta mais forte\n",NomeTime1,NomeTime1JogadorA);
+        return 1;
+    } else if (indexCartaTime1JogadorB < indexCartaTime2JogadorA && indexCartaTime1JogadorB < indexCartaTime2JogadorB && indexCartaTime1JogadorB < indexCartaTime1JogadorA){
+        reorganizarOrdemJogada(Time_1,Time_2,Time_1->Jogador_B.ordem);
+        printf("\n %s venceu essa, %s tem a carta mais forte\n",NomeTime1,NomeTime1JogadorB);
+        return 1;
+    }
+    else if (indexCartaTime2JogadorA < indexCartaTime1JogadorA && indexCartaTime2JogadorA < indexCartaTime1JogadorB && indexCartaTime2JogadorA < indexCartaTime2JogadorB){
+        reorganizarOrdemJogada(Time_1,Time_2,Time_2->Jogador_A.ordem);
+        printf("\n %s venceu essa, %s tem a carta mais forte\n",NomeTime2,NomeTime2JogadorA);
+        return 2;
+    }
+    else{
+        reorganizarOrdemJogada(Time_1,Time_2,Time_2->Jogador_B.ordem);
+        printf("\n %s venceu essa, %s tem a carta mais forte\n",NomeTime2,NomeTime2JogadorB);
+        return 2;
+
+    }
+    printf("\n________________________________________________\n");
+
 }
