@@ -189,12 +189,12 @@ void Truco(Time *Time_1, Time *Time_2, char manilhas[39][50], int TimeQtrucou, i
                     
                     if(ganhador == 11){
                         Time_1->pontos_time = Time_1->pontos_time + QntPontos;
-                        printf("\n %s Fugiu da rodada %s recebe somente %i ponto \n",Time_2->nome_time,Time_1->nome_time,QntPontos);
+                        printf("\n %s Fugiu da rodada %s recebe %i ponto \n",Time_2->nome_time,Time_1->nome_time,QntPontos);
                         break;
                     }
                     else if(ganhador == 22){
                         Time_2->pontos_time = Time_2->pontos_time + QntPontos;
-                        printf("\n %s Fugiu da rodada %s recebe somente %i ponto \n",Time_1->nome_time,Time_2->nome_time,QntPontos);
+                        printf("\n %s Fugiu da rodada %s recebe %i ponto \n",Time_1->nome_time,Time_2->nome_time,QntPontos);
                         break;
                     }
                     else if(ganhador == 2){
@@ -246,12 +246,12 @@ void Truco(Time *Time_1, Time *Time_2, char manilhas[39][50], int TimeQtrucou, i
                     
                     if(ganhador == 11){
                     Time_1->pontos_time = Time_1->pontos_time + QntPontos;
-                        printf("\n %s Fugiu da rodada %s recebe somente %i ponto \n",Time_2->nome_time,Time_1->nome_time,QntPontos);
+                        printf("\n %s Fugiu da rodada %s recebe %i ponto \n",Time_2->nome_time,Time_1->nome_time,QntPontos);
                         break;
                     }
                     else if(ganhador == 22){
                         Time_2->pontos_time = Time_2->pontos_time + QntPontos;
-                        printf("\n %s Fugiu da rodada %s recebe somente %i ponto \n",Time_1->nome_time,Time_2->nome_time,QntPontos);
+                        printf("\n %s Fugiu da rodada %s recebe %i ponto \n",Time_1->nome_time,Time_2->nome_time,QntPontos);
                         break;
                     }
                     else if(ganhador == 2){
@@ -268,13 +268,13 @@ void Truco(Time *Time_1, Time *Time_2, char manilhas[39][50], int TimeQtrucou, i
                         
                 }
                 
-                if(QntRodadasTime1 == 2){
+                if(QntRodadasTime1 == 2 && (ganhador != 11 || ganhador != 22)){
                     printf("\n________________________________________________\n");
                     printf("\%s Ganhou o truco ladrão, ele ganhou mais %i pontos, seu otário \n", Time_1->nome_time, QntPontos);
                     printf("\n________________________________________________\n");
                     Time_1->pontos_time = Time_1->pontos_time + QntPontos;
                 }
-                else{
+                if(QntRodadasTime2 == 2 && (ganhador != 11 || ganhador != 22)){
                     printf("\n________________________________________________\n");
                     printf("\%s Ganhou o truco ladrão, ele ganhou mais %i pontos, seu otário \n", Time_2->nome_time, QntPontos);
                     printf("\n________________________________________________\n");
@@ -887,7 +887,7 @@ int pegarCartaUsuarioTrucado(Time *Time_1, Time *Time_2,char cartas[39][50],int 
                 printf("\n________________________________________________\n");
                 
                 if(AceitouTruco == 1){
-                    PontosTruco = PontosTruco + 3;
+                    *PontosTruco = *PontosTruco + 3;
                 }
                 else{
                     return 11;
@@ -935,7 +935,7 @@ int pegarCartaUsuarioTrucado(Time *Time_1, Time *Time_2,char cartas[39][50],int 
                 printf("\n________________________________________________\n");
                 
                 if(AceitouTruco == 1){
-                    PontosTruco = PontosTruco + 3;
+                    *PontosTruco = *PontosTruco + 3;
                 }
                 else{
                     return 11;
@@ -980,7 +980,7 @@ int pegarCartaUsuarioTrucado(Time *Time_1, Time *Time_2,char cartas[39][50],int 
                 printf("\n________________________________________________\n");
                 
                 if(AceitouTruco == 1){
-                    PontosTruco = PontosTruco + 3;
+                    *PontosTruco = *PontosTruco + 3;
                 }
                 else{
                     return 22;
@@ -1027,7 +1027,7 @@ int pegarCartaUsuarioTrucado(Time *Time_1, Time *Time_2,char cartas[39][50],int 
                 printf("\n________________________________________________\n");
                 
                 if(AceitouTruco == 1){
-                    PontosTruco = PontosTruco + 3;
+                    *PontosTruco = *PontosTruco + 3;
                 }
                 else{
                     return 22;
