@@ -246,10 +246,12 @@ void Truco(Time *Time_1, Time *Time_2, char manilhas[39][50], int TimeQtrucou, i
                     if(ganhador == 11){
                     Time_1->pontos_time = Time_1->pontos_time + QntPontos;
                         printf("\n %s Fugiu da rodada %s recebe somente %i ponto \n",Time_2->nome_time,Time_1->nome_time,QntPontos);
+                        break;
                     }
                     else if(ganhador == 22){
                         Time_2->pontos_time = Time_2->pontos_time + QntPontos;
                         printf("\n %s Fugiu da rodada %s recebe somente %i ponto \n",Time_1->nome_time,Time_2->nome_time,QntPontos);
+                        break;
                     }
                     else if(ganhador == 2){
                       QntRodadasTime2 = QntRodadasTime2 + 1;
