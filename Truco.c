@@ -801,7 +801,6 @@ void separarCartas(Time *Time_1, Time *Time_2, char cartas[39][50]) {
        }
     }
 }
-<<<<<<< HEAD
 
 int pegarCartaUsuarioTrucado(Time *Time_1, Time *Time_2,char cartas[39][50],int *PontosTruco, int TimeQTrucou)
 {
@@ -1033,5 +1032,3 @@ int pegarCartaUsuarioTrucado(Time *Time_1, Time *Time_2,char cartas[39][50],int 
     printf("\n________________________________________________\n");
 
 }
-=======
->>>>>>> 2182cdba83ea476607381d9b797d1f5f178425e1
