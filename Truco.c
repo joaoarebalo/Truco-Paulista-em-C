@@ -6,6 +6,7 @@ struct JOGADOR {
     char nome_jogador[50];
     int  ordem;
     char cartas[3][50];
+    char cartaRodadda[1][10]
 };
 
 typedef struct Time {
@@ -338,10 +339,14 @@ int pegarCartaUsuario(Time *Time_1, Time *Time_2,char cartas[39][50])
                 return 22;
             }
             if(indexCarta == 5){
-                reorganizarOrdemJogada(Time_1,Time_2,i - 1);
+                Time_1->Jogador_A.ordem = 1;
+                Time_2->Jogador_A.ordem = 2;
+                Time_1->Jogador_B.ordem = 3;
+                Time_2->Jogador_B.ordem = 4;
                 return 15;
             }
-            
+
+            strcpy(Time_1->Jogador_A.cartaRodadda[0], Time_1->Jogador_A.cartas[indexCarta]);           
             strcpy(CartaTime1JogadorA, Time_1->Jogador_A.cartas[indexCarta]);
             removerElemento(Time_1->Jogador_A.cartas, &qnt_Array_Cartas, indexCarta);
             printf("\n________________________________________________\n");
@@ -369,9 +374,13 @@ int pegarCartaUsuario(Time *Time_1, Time *Time_2,char cartas[39][50])
                 return 22;
             }
             if(indexCarta == 5){
-                reorganizarOrdemJogada(Time_1,Time_2,i - 1);
+                Time_1->Jogador_B.ordem = 1;
+                Time_2->Jogador_A.ordem = 2;
+                Time_1->Jogador_A.ordem = 3;
+                Time_2->Jogador_B.ordem = 4;
                 return 15;
             }
+            strcpy(Time_1->Jogador_B.cartaRodadda[0], Time_1->Jogador_B.cartas[indexCarta]);           
             strcpy(CartaTime1JogadorB, Time_1->Jogador_B.cartas[indexCarta]);
             removerElemento(Time_1->Jogador_B.cartas, &qnt_Array_Cartas, indexCarta);
             printf("\n________________________________________________\n");
@@ -398,9 +407,13 @@ int pegarCartaUsuario(Time *Time_1, Time *Time_2,char cartas[39][50])
                 return 11;
             }
             if(indexCarta == 5){
-                reorganizarOrdemJogada(Time_1,Time_2,i - 1);
-                return 25;
+                Time_2->Jogador_A.ordem = 1;
+                Time_1->Jogador_B.ordem = 2;
+                Time_2->Jogador_B.ordem = 3;
+                Time_1->Jogador_A.ordem = 4;
+                return 25;               
             }
+            strcpy(Time_2->Jogador_A.cartaRodadda[0], Time_2->Jogador_A.cartas[indexCarta]);           
             strcpy(CartaTime2JogadorA, Time_2->Jogador_A.cartas[indexCarta]);
             removerElemento(Time_2->Jogador_A.cartas, &qnt_Array_Cartas, indexCarta);
             printf("\n________________________________________________\n");
@@ -427,9 +440,13 @@ int pegarCartaUsuario(Time *Time_1, Time *Time_2,char cartas[39][50])
                 return 11;
             }
             if(indexCarta == 5){
-                reorganizarOrdemJogada(Time_1,Time_2,i - 1);
+                Time_2->Jogador_B.ordem = 1;
+                Time_1->Jogador_A.ordem = 2;
+                Time_2->Jogador_A.ordem = 3;
+                Time_1->Jogador_B.ordem = 4;
                 return 25;
             }
+            strcpy(Time_2->Jogador_B.cartaRodadda[0], Time_2->Jogador_B.cartas[indexCarta]);           
             strcpy(CartaTime2JogadorB, Time_2->Jogador_B.cartas[indexCarta]);
             removerElemento(Time_2->Jogador_B.cartas, &qnt_Array_Cartas, indexCarta);
             printf("\n________________________________________________\n");
@@ -831,7 +848,13 @@ int pegarCartaUsuarioTrucado(Time *Time_1, Time *Time_2,char cartas[39][50],int 
     
     for (int i = 1; i < 5; i++)
     {
-        if (Time_1->Jogador_A.ordem == i)
+
+        //printf("%s",Time_1->Jogador_A.cartaRodadda[0]);
+       // printf("%s",Time_2->Jogador_A.cartaRodadda[0]);
+       // printf("%i",strlen(Time_1->Jogador_A.cartaRodadda[0]));
+       // printf("%i",strlen(Time_2->Jogador_A.cartaRodadda[0]));
+        
+        if (Time_1->Jogador_A.ordem == i && strlen(Time_1->Jogador_A.cartaRodadda[0]) == 0)
         {
             int indexCarta,AceitouTruco;
             int qnt_Array_Cartas = sizeof(Time_1->Jogador_A.cartas) / sizeof(Time_1->Jogador_A.cartas[0]);
@@ -877,7 +900,11 @@ int pegarCartaUsuarioTrucado(Time *Time_1, Time *Time_2,char cartas[39][50],int 
             printf("\n________________________________________________\n");
 
         }
-        if (Time_1->Jogador_B.ordem == i)
+        else{
+            strcpy(CartaTime1JogadorA,Time_1->Jogador_A.cartaRodadda[0]);
+        }
+
+        if (Time_1->Jogador_B.ordem == i  && strlen(Time_1->Jogador_B.cartaRodadda[0] ) == 0)
         {
             int indexCarta,AceitouTruco;
             int qnt_Array_Cartas = sizeof(Time_1->Jogador_B.cartas) / sizeof(Time_1->Jogador_B.cartas[0]);
@@ -919,7 +946,10 @@ int pegarCartaUsuarioTrucado(Time *Time_1, Time *Time_2,char cartas[39][50],int 
             printf("\n________________________________________________\n");
 
         }
-        if (Time_2->Jogador_A.ordem == i)
+        else{
+            strcpy(CartaTime1JogadorB,Time_1->Jogador_B.cartaRodadda[0]);
+        }
+        if (Time_2->Jogador_A.ordem == i && strlen(Time_2->Jogador_A.cartaRodadda[0] ) == 0)
         {
             int indexCarta,AceitouTruco;
             int qnt_Array_Cartas = sizeof(Time_2->Jogador_A.cartas) / sizeof(Time_2->Jogador_A.cartas[0]);
@@ -961,7 +991,10 @@ int pegarCartaUsuarioTrucado(Time *Time_1, Time *Time_2,char cartas[39][50],int 
             printf("\n________________________________________________\n");
 
         }
-        if (Time_2->Jogador_B.ordem == i)
+         else{
+            strcpy(CartaTime2JogadorA,Time_2->Jogador_A.cartaRodadda[0]);
+        }
+        if (Time_2->Jogador_B.ordem == i && strlen(Time_2->Jogador_B.cartaRodadda[0] ) == 0)
         {
             int indexCarta,AceitouTruco;
             int qnt_Array_Cartas = sizeof(Time_2->Jogador_B.cartas) / sizeof(Time_2->Jogador_B.cartas[0]);
@@ -1005,7 +1038,19 @@ int pegarCartaUsuarioTrucado(Time *Time_1, Time *Time_2,char cartas[39][50],int 
             printf("\n________________________________________________\n");
 
         }
+        else{
+            strcpy(CartaTime2JogadorB,Time_2->Jogador_B.cartaRodadda[0]);
+        }
+
     }
+    
+    strcpy(Time_1->Jogador_A.cartaRodadda[0],"");
+    strcpy(Time_2->Jogador_A.cartaRodadda[0],"");
+    strcpy(Time_1->Jogador_B.cartaRodadda[0],"");
+    strcpy(Time_2->Jogador_B.cartaRodadda[0],"");
+
+    
+    
     indexCartaTime1JogadorA = encontrarIndexNaRodada(CartaTime1JogadorA,cartas);
     indexCartaTime1JogadorB = encontrarIndexNaRodada(CartaTime1JogadorB,cartas);
     indexCartaTime2JogadorA = encontrarIndexNaRodada(CartaTime2JogadorA,cartas);
