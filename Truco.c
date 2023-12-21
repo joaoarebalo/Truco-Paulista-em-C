@@ -112,14 +112,26 @@ int jogarRodada(Time *Time_1, Time *Time_2, char cartasOrdenadas[39][50]) {
 
     embaralharCartas(CartasRodada);
     
-    for (int i = 0; i < 39; i++) {
+    for (int i = 0; i <= 39; i++) {
         
-        if(strcmp(CartasRodada[i], "") != 0){
+        if(strlen(CartasRodada[i]) != 0){
            strcpy(CartasRodada[i], CartasRodada[i]);
         }
     }
     separarCartas(Time_1, Time_2, CartasRodada);
+    for (int i = 0; i <= 39; i++) {
+        
+        if(strlen(CartasRodada[i]) != 0){
+           strcpy(CartasRodada[i], CartasRodada[i]);
+        }
+    }
     separarManilha(CartasRodada);
+    for (int i = 0; i <= 39; i++) {
+        
+        if(strlen(CartasRodada[i]) != 0){
+           strcpy(CartasRodada[i], CartasRodada[i]);
+        }
+    }
 
     //Enquanto nenhum dos 2 times não fizer 2 rodadas no melhor de 3
     while (TotalTime1 != 2 && TotalTime2 != 2) {
